@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Create Relief Camp for {{ disaster.title }}</h3>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Camp Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="capacity" class="form-label">Maximum Capacity</label>
+                        <input type="number" class="form-control" id="capacity" name="capacity" required min="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="facilities" class="form-label">Available Facilities</label>
+                        <textarea class="form-control" id="facilities" name="facilities" rows="3" required 
+                            placeholder="List facilities like medical, food, water, sanitation, etc."></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Create Camp</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

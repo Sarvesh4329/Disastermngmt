@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Relief Camps Overview</h2>
+        
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Camps</h5>
+                        <h2>{{ stats.total }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Camps</h5>
+                        <h2>{{ stats.active }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Capacity</h5>
+                        <h2>{{ stats.total_capacity }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">Current Occupancy</h5>
+                        <h2>{{ stats.total_occupancy }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive mt-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Camp Name</th>
+                        <th>Location</th>
+                        <th>Disaster</th>
+                        <th>Occupancy</th>
+                        <th>Medical Facilities</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for camp in camps %}
+                    <tr>
+                        <td>{{ camp.name }}</td>
+                        <td>{{ camp.location }}</td>
+                        <td>{{ camp.disaster.title }}</td>
+                        <td>{{ camp.current_occupancy }}/{{ camp.capacity }}</td>
+                        <td>{{ camp.medical_facilities|length }}</td>
+                        <td>
+                            <a href="{{ url_for('camp_detail', camp_id=camp.id) }}" class="btn btn-sm btn-info">View</a>
+                            <a href="{{ url_for('manage_medical_facility', camp_id=camp.id) }}" class="btn btn-sm btn-primary">Add Medical</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">{{ disaster.title }}</h2>
+                <div class="mb-3">
+                    <span class="badge bg-{{ 'danger' if disaster.severity == 'High' else ('warning' if disaster.severity == 'Medium' else 'info') }}">
+                        {{ disaster.severity }}
+                    </span>
+                    <span class="badge bg-primary">{{ disaster.disaster_type }}</span>
+                    <span class="badge bg-{{ 'success' if disaster.status == 'resolved' else 'warning' }}">
+                        {{ disaster.status }}
+                    </span>
+                </div>
+                <p class="card-text">{{ disaster.description }}</p>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Location:</strong> {{ disaster.location }}</p>
+                        <p><strong>Affected People:</strong> {{ disaster.affected_people or 'Not specified' }}</p>
+                        <p><strong>Area Affected:</strong> {{ disaster.area_affected|default('Unknown') }} km²</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Date Reported:</strong> {{ disaster.date_reported.strftime('%Y-%m-%d %H:%M') }}</p>
+                        <p><strong>Estimated Damage:</strong> 
+                            {% if disaster.estimated_damage %}
+                                ${{ "%.2f"|format(disaster.estimated_damage) }}
+                            {% else %}
+                                Not assessed
+                            {% endif %}
+                        </p>
+                        <p><strong>Response Phase:</strong> {{ disaster.response_phase|default('Initial Assessment') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4>Resources Needed</h4>
+                <p>{{ disaster.resources_needed }}</p>
+            </div>
+        </div>
+
+        {% if current_user.is_authenticated %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4>Updates</h4>
+                {% for update in disaster.updates %}
+                <div class="alert alert-info">
+                    <p>{{ update.update_text }}</p>
+                    <small>Posted by: {{ update.update_reporter.username }} on {{ update.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                </div>
+                {% endfor %}
+
+                <h4 class="mt-4">Add Update</h4>
+                <form method="POST" action="{{ url_for('add_update', disaster_id=disaster.id) }}">
+                    <div class="mb-3">
+                        <textarea class="form-control" name="update_text" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Update</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4>Relief Camps</h4>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('create_relief_camp', disaster_id=disaster.id) }}" class="btn btn-primary mb-3">Add Relief Camp</a>
+                {% endif %}
+                {% for camp in disaster.relief_camps %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>{{ camp.name }}</h5>
+                        <p class="mb-1"><strong>Location:</strong> {{ camp.location }}</p>
+                        <p class="mb-1">Capacity: {{ camp.current_occupancy }}/{{ camp.capacity }}</p>
+                        <p class="mb-2"><strong>Facilities:</strong> {{ camp.facilities }}</p>
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('camp_detail', camp_id=camp.id) }}" class="btn btn-sm btn-info">View Details</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4>Available Resources</h4>
+                <div class="list-group">
+                    {% for resource in resources %}
+                    <div class="list-group-item">
+                        <h6 class="mb-1">{{ resource.name }}</h6>
+                        <p class="mb-1">Quantity: {{ resource.quantity }}</p>
+                        <small>Status: {{ resource.status }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

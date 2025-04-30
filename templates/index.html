@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="GET" class="row g-3">
+                    <div class="col-md-3">
+                        <select name="type" class="form-select">
+                            <option value="">All Types</option>
+                            <option value="Flood">Flood</option>
+                            <option value="Earthquake">Earthquake</option>
+                            <option value="Hurricane">Hurricane</option>
+                            <option value="Fire">Fire</option>
+                            <option value="Landslide">Landslide</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="severity" class="form-select">
+                            <option value="">All Severities</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="location" class="form-control" placeholder="Search by location">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Active Disasters</h1>
+        <div class="row">
+            {% for disaster in disasters %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ disaster.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ disaster.location }}</h6>
+                        <p class="card-text">{{ disaster.description[:200] }}...</p>
+                        <div class="badge bg-{{ 'danger' if disaster.severity == 'High' else ('warning' if disaster.severity == 'Medium' else 'info') }}">
+                            {{ disaster.severity }}
+                        </div>
+                        <div class="badge bg-primary">{{ disaster.disaster_type }}</div>
+                        <div class="mt-3">
+                            <p class="text-muted mb-2">
+                                <small>Affected People: {{ disaster.affected_people }}</small>
+                            </p>
+                            <p class="text-muted mb-2">
+                                <small>Reported: {{ disaster.date_reported.strftime('%Y-%m-%d %H:%M') }}</small>
+                            </p>
+                            <a href="{{ url_for('disaster_detail', id=disaster.id) }}" class="btn btn-primary btn-sm">View Details</a>
+                            {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('add_resource', disaster_id=disaster.id) }}" class="btn btn-outline-primary btn-sm">Add Resource</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

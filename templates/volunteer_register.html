@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Register as Volunteer</h3>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="skills" class="form-label">Skills & Experience</label>
+                        <textarea class="form-control" id="skills" name="skills" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="availability" class="form-label">Availability</label>
+                        <select class="form-select" id="availability" name="availability" required>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Weekends">Weekends</option>
+                            <option value="On-call">On-call</option>
+                        </select>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

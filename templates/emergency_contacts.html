@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2>Emergency Contacts</h2>
+        <div class="list-group">
+            {% for contact in contacts %}
+            <div class="list-group-item">
+                <h5 class="mb-1">{{ contact.name }}</h5>
+                <p class="mb-1"><strong>Organization:</strong> {{ contact.organization }}</p>
+                <p class="mb-1"><strong>Role:</strong> {{ contact.role }}</p>
+                <p class="mb-1"><strong>Phone:</strong> {{ contact.phone_primary }}</p>
+                {% if contact.phone_secondary %}
+                <p class="mb-1"><strong>Alternative Phone:</strong> {{ contact.phone_secondary }}</p>
+                {% endif %}
+                <p class="mb-1"><strong>Email:</strong> {{ contact.email }}</p>
+                <p class="mb-1"><strong>Area:</strong> {{ contact.area_of_operation }}</p>
+                {% if contact.available_24x7 %}
+                <span class="badge bg-success">24/7 Available</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if current_user.is_authenticated %}
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h4>Add Emergency Contact</h4>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="organization" class="form-label">Organization</label>
+                        <input type="text" class="form-control" id="organization" name="organization" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <input type="text" class="form-control" id="role" name="role" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone_primary" class="form-label">Primary Phone</label>
+                        <input type="tel" class="form-control" id="phone_primary" name="phone_primary" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone_secondary" class="form-label">Secondary Phone</label>
+                        <input type="tel" class="form-control" id="phone_secondary" name="phone_secondary">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="area_of_operation" class="form-label">Area of Operation</label>
+                        <input type="text" class="form-control" id="area_of_operation" name="area_of_operation" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="available_24x7" name="available_24x7">
+                        <label class="form-check-label" for="available_24x7">Available 24/7</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Contact</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

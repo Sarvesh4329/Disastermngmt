@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Report New Disaster</h3>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="type" class="form-label">Disaster Type</label>
+                            <select class="form-select" id="type" name="type" required>
+                                <option value="">Select type</option>
+                                <option value="Flood">Flood</option>
+                                <option value="Earthquake">Earthquake</option>
+                                <option value="Hurricane">Hurricane</option>
+                                <option value="Fire">Fire</option>
+                                <option value="Landslide">Landslide</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="severity" class="form-label">Severity</label>
+                            <select class="form-select" id="severity" name="severity" required>
+                                <option value="">Select severity</option>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="affected_people" class="form-label">Affected People</label>
+                        <input type="number" class="form-control" id="affected_people" name="affected_people" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="resources_needed" class="form-label">Resources Needed</label>
+                        <textarea class="form-control" id="resources_needed" name="resources_needed" rows="3"></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Submit Report</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

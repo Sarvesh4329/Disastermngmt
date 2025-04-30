@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">{{ camp.name }}</h2>
+                <p class="text-muted">Relief Camp for {{ camp.disaster.title }}</p>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Location:</strong> {{ camp.location }}</p>
+                        <p><strong>Capacity:</strong> {{ camp.current_occupancy }}/{{ camp.capacity }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Facilities:</strong></p>
+                        <p>{{ camp.facilities }}</p>
+                    </div>
+                </div>
+
+                {% if current_user.is_authenticated %}
+                <hr>
+                <h4>Update Occupancy</h4>
+                <form method="POST" action="{{ url_for('update_camp', camp_id=camp.id) }}" class="row g-3">
+                    <div class="col-auto">
+                        <input type="number" class="form-control" name="current_occupancy" 
+                            value="{{ camp.current_occupancy }}" min="0" max="{{ camp.capacity }}">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4>Medical Facilities</h4>
+                {% for facility in camp.medical_facilities %}
+                <div class="mb-2">
+                    <h5>{{ facility.name }}</h5>
+                    <p class="mb-1">Type: {{ facility.facility_type }}</p>
+                    <p class="mb-1">Available Beds: {{ facility.available_beds }}/{{ facility.capacity }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4>Available Supplies</h4>
+                {% for supply in camp.supplies %}
+                <div class="mb-2">
+                    <p class="mb-1">{{ supply.item_name }}: {{ supply.quantity }} {{ supply.unit }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

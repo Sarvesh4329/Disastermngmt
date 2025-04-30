@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Welcome, {{ current_user.username }}!</h2>
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Disasters</h5>
+                        <h2>{{ disasters|length }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h3>Recent Disasters</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Location</th>
+                            <th>Type</th>
+                            <th>Severity</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for disaster in disasters %}
+                        <tr>
+                            <td>{{ disaster.title }}</td>
+                            <td>{{ disaster.location }}</td>
+                            <td>{{ disaster.disaster_type }}</td>
+                            <td><span class="badge bg-{{ 'danger' if disaster.severity == 'High' else 'warning' }}">{{ disaster.severity }}</span></td>
+                            <td>{{ disaster.status }}</td>
+                            <td>
+                                <a href="{{ url_for('disaster_detail', id=disaster.id) }}" class="btn btn-sm btn-primary">View</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
