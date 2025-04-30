@@ -2,36 +2,46 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">Add Resource for {{ disaster.title }}</h3>
-                <form method="POST">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Resource Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="quantity" class="form-label">Quantity</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" required min="1">
-                    </div>
-                    <div class="mb-3">
-                        <label for="type" class="form-label">Resource Type</label>
-                        <select class="form-select" id="type" name="type" required>
-                            <option value="">Select type</option>
-                            <option value="Medical">Medical</option>
-                            <option value="Food">Food</option>
-                            <option value="Water">Water</option>
-                            <option value="Shelter">Shelter</option>
-                            <option value="Equipment">Equipment</option>
-                        </select>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Add Resource</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="col-md-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <h3 class="card-title text-primary fw-bold mb-4">
+          <i class="fas fa-boxes me-2"></i>Add Resource for {{ disaster.title }}
+        </h3>
+
+        <form method="POST" novalidate>
+          <div class="mb-3">
+            <label for="name" class="form-label fw-semibold">Resource Name</label>
+            <input type="text" class="form-control shadow-sm" id="name" name="name" required
+              placeholder="e.g., Oxygen Cylinders">
+          </div>
+
+          <div class="mb-3">
+            <label for="quantity" class="form-label fw-semibold">Quantity</label>
+            <input type="number" class="form-control shadow-sm" id="quantity" name="quantity" required min="1"
+              placeholder="e.g., 50">
+          </div>
+
+          <div class="mb-3">
+            <label for="type" class="form-label fw-semibold">Resource Type</label>
+            <select class="form-select shadow-sm" id="type" name="type" required>
+              <option disabled selected value="">Select type</option>
+              <option value="Medical">Medical</option>
+              <option value="Food">Food</option>
+              <option value="Water">Water</option>
+              <option value="Shelter">Shelter</option>
+              <option value="Equipment">Equipment</option>
+            </select>
+          </div>
+
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-success">
+              <i class="fas fa-plus-circle me-1"></i>Add Resource
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

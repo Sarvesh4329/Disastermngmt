@@ -3,7 +3,8 @@
 {% block content %}
 <div class="row">
     <div class="col-md-8">
-        <div class="card mb-4">
+        <!-- Disaster Details Card -->
+        <div class="card mb-4 shadow-sm">
             <div class="card-body">
                 <h2 class="card-title">{{ disaster.title }}</h2>
                 <div class="mb-3">
@@ -38,7 +39,8 @@
             </div>
         </div>
 
-        <div class="card mb-4">
+        <!-- Resources Needed Card -->
+        <div class="card mb-4 shadow-sm">
             <div class="card-body">
                 <h4>Resources Needed</h4>
                 <p>{{ disaster.resources_needed }}</p>
@@ -46,7 +48,8 @@
         </div>
 
         {% if current_user.is_authenticated %}
-        <div class="card mb-4">
+        <!-- Updates Card -->
+        <div class="card mb-4 shadow-sm">
             <div class="card-body">
                 <h4>Updates</h4>
                 {% for update in disaster.updates %}
@@ -69,14 +72,17 @@
     </div>
 
     <div class="col-md-4">
-        <div class="card mb-4">
+        <!-- Relief Camps Card -->
+        <div class="card mb-4 shadow-sm">
             <div class="card-body">
                 <h4>Relief Camps</h4>
                 {% if current_user.is_authenticated %}
-                <a href="{{ url_for('create_relief_camp', disaster_id=disaster.id) }}" class="btn btn-primary mb-3">Add Relief Camp</a>
+                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#newCampModal">
+                    Add Relief Camp
+                </button>
                 {% endif %}
                 {% for camp in disaster.relief_camps %}
-                <div class="card mb-3">
+                <div class="card mb-3 shadow-sm">
                     <div class="card-body">
                         <h5>{{ camp.name }}</h5>
                         <p class="mb-1"><strong>Location:</strong> {{ camp.location }}</p>
@@ -91,7 +97,8 @@
             </div>
         </div>
 
-        <div class="card">
+        <!-- Available Resources Card -->
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h4>Available Resources</h4>
                 <div class="list-group">

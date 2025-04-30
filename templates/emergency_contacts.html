@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="col-md-8">
-        <h2>Emergency Contacts</h2>
+        <h2 class="mb-4">Emergency Contacts</h2>
         <div class="list-group">
             {% for contact in contacts %}
             <div class="list-group-item">
@@ -26,9 +26,9 @@
 
     {% if current_user.is_authenticated %}
     <div class="col-md-4">
-        <div class="card">
+        <div class="card shadow-sm">
             <div class="card-body">
-                <h4>Add Emergency Contact</h4>
+                <h4 class="card-title">Add Emergency Contact</h4>
                 <form method="POST">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -62,7 +62,9 @@
                         <input type="checkbox" class="form-check-input" id="available_24x7" name="available_24x7">
                         <label class="form-check-label" for="available_24x7">Available 24/7</label>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Contact</button>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Add Contact</button>
+                    </div>
                 </form>
             </div>
         </div>

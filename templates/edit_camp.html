@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="card-title mb-4">Edit Camp Details</h3>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Camp Name</label>
+                        <input type="text" class="form-control" id="name" name="name" 
+                            value="{{ camp.name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" 
+                            value="{{ camp.location }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="capacity" class="form-label">Maximum Capacity</label>
+                        <input type="number" class="form-control" id="capacity" name="capacity" 
+                            value="{{ camp.capacity }}" required min="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="facilities" class="form-label">Available Facilities</label>
+                        <textarea class="form-control" id="facilities" name="facilities" rows="3" required>{{ camp.facilities }}</textarea>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Update Camp</button>
+                        <a href="{{ url_for('camp_detail', camp_id=camp.id) }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

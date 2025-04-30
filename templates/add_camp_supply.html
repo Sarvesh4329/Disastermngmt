@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <h3 class="card-title text-primary fw-bold mb-4">
+          <i class="fas fa-box-open me-2"></i>Add Supplies to {{ camp.name }}
+        </h3>
+
+        <form method="POST" novalidate>
+          <div class="mb-3">
+            <label for="item_name" class="form-label fw-semibold">Item Name</label>
+            <input type="text" class="form-control shadow-sm" id="item_name" name="item_name" required
+              placeholder="Enter item name">
+          </div>
+
+          <div class="mb-3">
+            <label for="category" class="form-label fw-semibold">Category</label>
+            <select class="form-select shadow-sm" id="category" name="category" required>
+              <option disabled selected value="">Select category</option>
+              <option value="Food">Food</option>
+              <option value="Water">Water</option>
+              <option value="Medical">Medical</option>
+              <option value="Hygiene">Hygiene</option>
+              <option value="Shelter">Shelter</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="quantity" class="form-label fw-semibold">Quantity</label>
+              <input type="number" class="form-control shadow-sm" id="quantity" name="quantity" required min="1"
+                placeholder="Enter quantity">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="unit" class="form-label fw-semibold">Unit</label>
+              <input type="text" class="form-control shadow-sm" id="unit" name="unit" required
+                placeholder="e.g., kg, liters, boxes">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="expiry_date" class="form-label fw-semibold">Expiry Date (if applicable)</label>
+            <input type="date" class="form-control shadow-sm" id="expiry_date" name="expiry_date">
+          </div>
+
+          <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-success">
+              <i class="fas fa-plus-circle me-1"></i>Add Supply
+            </button>
+            <a href="{{ url_for('camp_detail', camp_id=camp.id) }}" class="btn btn-outline-secondary">
+              <i class="fas fa-arrow-left me-1"></i>Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

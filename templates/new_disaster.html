@@ -3,23 +3,23 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8">
-        <div class="card">
+        <div class="card shadow-sm">
             <div class="card-body">
-                <h3 class="card-title">Report New Disaster</h3>
+                <h3 class="card-title text-center">Report New Disaster</h3>
                 <form method="POST">
                     <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" required>
+                        <label for="title" class="form-label">Disaster Title</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter disaster title" required>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Provide a detailed description" required></textarea>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="type" class="form-label">Disaster Type</label>
                             <select class="form-select" id="type" name="type" required>
-                                <option value="">Select type</option>
+                                <option value="">Select disaster type</option>
                                 <option value="Flood">Flood</option>
                                 <option value="Earthquake">Earthquake</option>
                                 <option value="Hurricane">Hurricane</option>
@@ -39,17 +39,17 @@
                     </div>
                     <div class="mb-3">
                         <label for="location" class="form-label">Location</label>
-                        <input type="text" class="form-control" id="location" name="location" required>
+                        <input type="text" class="form-control" id="location" name="location" placeholder="Enter location affected by the disaster" required>
                     </div>
                     <div class="mb-3">
                         <label for="affected_people" class="form-label">Affected People</label>
-                        <input type="number" class="form-control" id="affected_people" name="affected_people" required>
+                        <input type="number" class="form-control" id="affected_people" name="affected_people" placeholder="Enter the number of affected people" required>
                     </div>
                     <div class="mb-3">
                         <label for="resources_needed" class="form-label">Resources Needed</label>
-                        <textarea class="form-control" id="resources_needed" name="resources_needed" rows="3"></textarea>
+                        <textarea class="form-control" id="resources_needed" name="resources_needed" rows="3" placeholder="List the resources required, if any"></textarea>
                     </div>
-                    <div class="d-grid">
+                    <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Submit Report</button>
                     </div>
                 </form>

@@ -2,14 +2,14 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm">
             <div class="card-body">
-                <h3 class="card-title">Register as Volunteer</h3>
+                <h3 class="card-title text-center">Register as Volunteer</h3>
                 <form method="POST">
                     <div class="mb-3">
                         <label for="skills" class="form-label">Skills & Experience</label>
-                        <textarea class="form-control" id="skills" name="skills" rows="3" required></textarea>
+                        <textarea class="form-control" id="skills" name="skills" rows="4" placeholder="Describe your skills and experience..." required></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="availability" class="form-label">Availability</label>
@@ -20,8 +20,9 @@
                             <option value="On-call">On-call</option>
                         </select>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Register as Volunteer</button>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
                     </div>
                 </form>
             </div>

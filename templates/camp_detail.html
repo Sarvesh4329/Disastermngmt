@@ -1,65 +1,130 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-body">
-                <h2 class="card-title">{{ camp.name }}</h2>
-                <p class="text-muted">Relief Camp for {{ camp.disaster.title }}</p>
-                <hr>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p><strong>Location:</strong> {{ camp.location }}</p>
-                        <p><strong>Capacity:</strong> {{ camp.current_occupancy }}/{{ camp.capacity }}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p><strong>Facilities:</strong></p>
-                        <p>{{ camp.facilities }}</p>
-                    </div>
-                </div>
+<div class="row g-4">
 
-                {% if current_user.is_authenticated %}
-                <hr>
-                <h4>Update Occupancy</h4>
-                <form method="POST" action="{{ url_for('update_camp', camp_id=camp.id) }}" class="row g-3">
-                    <div class="col-auto">
-                        <input type="number" class="form-control" name="current_occupancy" 
-                            value="{{ camp.current_occupancy }}" min="0" max="{{ camp.capacity }}">
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </div>
-                </form>
-                {% endif %}
-            </div>
+  <!-- Camp Info Section -->
+  <div class="col-md-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h2 class="card-title text-primary fw-bold">{{ camp.name }}</h2>
+          {% if current_user.is_authenticated %}
+          <a href="{{ url_for('edit_camp', camp_id=camp.id) }}" class="btn btn-outline-primary rounded-pill">
+            <i class="fas fa-edit me-1"></i>Edit Camp
+          </a>
+          {% endif %}
         </div>
+
+        <p class="text-muted mb-3 fs-6">Relief Camp for <span class="fw-semibold text-dark">{{ camp.disaster.title }}</span></p>
+        <hr>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <p class="mb-2">
+              <i class="fas fa-map-marker-alt text-danger me-2"></i>
+              <strong>Location:</strong> {{ camp.location }}
+            </p>
+            <p class="mb-0">
+              <i class="fas fa-users text-success me-2"></i>
+              <strong>Occupancy:</strong> {{ camp.current_occupancy }}/{{ camp.capacity }}
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p class="mb-2"><i class="fas fa-tools text-warning me-2"></i><strong>Facilities:</strong></p>
+            <p class="text-body small bg-light p-2 rounded">{{ camp.facilities }}</p>
+          </div>
+        </div>
+
+        {% if current_user.is_authenticated %}
+        <hr>
+        <h5 class="fw-semibold mb-3">Update Camp Occupancy</h5>
+        <form method="POST" action="{{ url_for('update_camp', camp_id=camp.id) }}" class="row gy-2 gx-3 align-items-center">
+          <div class="col-auto">
+            <input type="number" class="form-control border-primary-subtle shadow-sm rounded-pill"
+              name="current_occupancy" value="{{ camp.current_occupancy }}" min="0" max="{{ camp.capacity }}" required>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary px-4 rounded-pill">
+              <i class="fas fa-save me-1"></i>Update
+            </button>
+          </div>
+        </form>
+        {% endif %}
+      </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h4>Medical Facilities</h4>
-                {% for facility in camp.medical_facilities %}
-                <div class="mb-2">
-                    <h5>{{ facility.name }}</h5>
-                    <p class="mb-1">Type: {{ facility.facility_type }}</p>
-                    <p class="mb-1">Available Beds: {{ facility.available_beds }}/{{ facility.capacity }}</p>
-                </div>
-                {% endfor %}
-            </div>
+    <!-- Supplies Table Section -->
+    {% if current_user.is_authenticated %}
+    <div class="card shadow-sm border-0 mt-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-semibold mb-0 text-secondary">Supplies Management</h5>
+          <a href="{{ url_for('manage_camp_supply', camp_id=camp.id) }}" class="btn btn-success rounded-pill">
+            <i class="fas fa-plus me-1"></i>Add Supplies
+          </a>
         </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h4>Available Supplies</h4>
-                {% for supply in camp.supplies %}
-                <div class="mb-2">
-                    <p class="mb-1">{{ supply.item_name }}: {{ supply.quantity }} {{ supply.unit }}</p>
-                </div>
-                {% endfor %}
-            </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+                <th>Expiry Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for supply in camp.supplies %}
+              <tr>
+                <td>{{ supply.item_name }}</td>
+                <td>{{ supply.category }}</td>
+                <td>{{ supply.quantity }}</td>
+                <td>{{ supply.unit }}</td>
+                <td>{{ supply.expiry_date.strftime('%Y-%m-%d') if supply.expiry_date else 'N/A' }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
+      </div>
     </div>
+    {% endif %}
+  </div>
+
+  <!-- Medical & Available Supplies -->
+  <div class="col-md-4">
+    <!-- Medical Facilities -->
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body">
+        <h5 class="fw-semibold text-success mb-3">
+          <i class="fas fa-briefcase-medical me-2"></i>Medical Facilities
+        </h5>
+        {% for facility in camp.medical_facilities %}
+        <div class="mb-3 p-3 bg-light rounded border-start border-3 border-success-subtle">
+          <h6 class="mb-1 fw-semibold">{{ facility.name }}</h6>
+          <p class="mb-0"><strong>Type:</strong> {{ facility.facility_type }}</p>
+          <p class="mb-0"><strong>Available Beds:</strong> {{ facility.available_beds }}/{{ facility.capacity }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Available Supplies -->
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="fw-semibold text-warning mb-3">
+          <i class="fas fa-boxes me-2"></i>Available Supplies
+        </h5>
+        {% for supply in camp.supplies %}
+        <div class="mb-2 bg-light p-2 rounded">
+          <span class="fw-semibold">{{ supply.item_name }}</span>:
+          {{ supply.quantity }} {{ supply.unit }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
